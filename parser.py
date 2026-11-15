@@ -1,5 +1,6 @@
 # Question: Is parsing strategy graded? What if I do this wrong?
-import csv, xml.etree.ElementTree
+import csv
+import xml.etree.ElementTree as ET
 from Word import Word
 
 levels = ['a1', 'a2', 'b1', 'b2', 'c1']
@@ -18,4 +19,25 @@ with open('data/svalex.tsv', newline='') as csv_file:
                 break
         print("First_level:", first_level.upper())
 
-word = Word('test', 'test', 'test', None)
+
+dictionary = {}
+
+tree = ET.parse('data/folkets_sv_en_public.xml')
+root = tree.getroot()
+
+for word in root:
+    w = word.get('value')
+    all_translations = []
+    for translation in word:
+        if translation.tag != 'translation':
+            break
+        t = translation.get('value')
+        all_translations.append(t)
+
+    dictionary[w] = all_translations
+
+print(dictionary)
+
+for key, value in dictionary.items():
+    if len(value) > 12:
+        print(key, value)
