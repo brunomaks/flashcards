@@ -7,5 +7,5 @@ class Word:
         self.trans = trans
 
     def __str__(self):
-        return f"({self.level}) {self.dict_form}: {self.trans}"
+        return f"({self.level}) {self.pos} {self.dict_form}: {self.trans}"
 
