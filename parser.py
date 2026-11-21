@@ -2,6 +2,7 @@ import csv
 import xml.etree.ElementTree as ET
 
 from Word import Word
+import utils
 
 LEVELS = ("a1", "a2", "b1", "b2", "c1")
 
@@ -27,10 +28,10 @@ def load_svalex(path):
 
             words.append(
                 Word(
-                    row["word"],
-                    tag,
-                    first_level(row),
-                    row["total_freq@total"],
+                    dict_form=row["word"],
+                    pos=tag,
+                    level=first_level(row),
+                    freq=row["total_freq@total"],
                 )
             )
 
@@ -188,3 +189,11 @@ if __name__ == "__main__":
     print(f"Duplicates removed: {len(remove_indices)}")
 
     print(f"Valid words left in total: {len(words)}")
+
+    utils.serialize(words, "words.tsv")
+
+    new_words = utils.deserialize("words.tsv")
+    for word in new_words:
+        print(word)
+
+    print(len(new_words))

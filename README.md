@@ -1,3 +1,3 @@
 #### Extensions
 
-1) POS tag handling
+1) Matching words based on POS tags
